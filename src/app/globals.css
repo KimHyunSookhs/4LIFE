@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+/**
+ * 브랜드 컬러 (로고 기반)
+ * - 전역 토큰은 :root에 두고, Tailwind 유틸(`bg-primary` 등)은 @theme에서 같은 값을 가리키게 연결
+ */
+:root {
+  /* 로고 메인 블루 — 버튼·링크·포인트 */
+  --primary: #5b74b8;
+  /* 넓은 면·카드 배경용 파스텔 (밝은 화면 베이스 톤) */
+  --secondary: #eef3ff;
+  /* 조금 더 채도 있는 파스텔 — 호버·뱃지·보조 강조 */
+  --secondary-bright: #99c2ff;
+  /* 제목·강조 문장용 딥 블루 */
+  --deep-blue: #2f3e6b;
+
+  /* 밝은 UI 기본 (다크 모디아 자동 반전 없이 일관되게 라이트 톤 유지) */
+  --background: #f5f8ff;
+  /* 일반 본문/라벨 — 딥 블루보다 약간 옅게 두어 가독성 유지 */
+  --foreground: #3d4a6a;
+  /* 본문 보조·캡션 */
+  --muted-foreground: #5a6789;
+  /* 카드·헤더 바 등 흰 면 */
+  --card: #ffffff;
+  /* 경계선 — primary를 살짝 희석한 느낌 */
+  --border: #dde5f5;
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-secondary-bright: var(--secondary-bright);
+  --color-deep-blue: var(--deep-blue);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-border: var(--border);
+  --font-sans: var(--font-noto-sans-kr);
+  /* 코드·숫자 등: 별도 웹폰트 없이 OS 기본 모노스페이스 */
+  --font-mono:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  /* 한·중·일: 덩어리 단위 줄바꿈이 자연스럽게. 긴 URL 등은 넘칠 때만 안쪽에서 끊음 */
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/**
+ * 모바일 전용 스크롤바 숨김
+ *
+ * - 스크롤 기능 자체는 유지하고, 오른쪽에 보이는 얇은 스크롤바 UI만 숨긴다.
+ * - 데스크톱에서는 스크롤 위치 확인이 더 중요할 수 있어 767px 이하(모바일 폭)에서만 적용한다.
+ * - Firefox는 `scrollbar-width`, Chrome/Safari/Edge(WebKit 계열)는 `::-webkit-scrollbar`가 필요하다.
+ *
+ * Flutter 비유: `Scrollbar` 위젯을 감싸지 않아도 `ListView` 스크롤은 그대로 되는 것처럼,
+ * 여기서도 스크롤 가능한 페이지는 유지하고 표시 장식만 제거하는 설정이다.
+ */
+@media (max-width: 767px) {
+  html,
+  body {
+    scrollbar-width: none;
+  }
+
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/**
+ * 전역 하단 CTA(`SiteCtaSection`) 전용 — 최소 한 뷰포트 높이.
+ * (`scroll-snap-align`은 조상에 `scroll-snap-type`이 있을 때만 적용됩니다.)
+ */
+@utility snap-page-section {
+  scroll-snap-align: start;
+  min-height: 100svh;
+}
