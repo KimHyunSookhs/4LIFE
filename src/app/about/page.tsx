@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { AboutCeoScrollProgress } from "@/src/app/about/components/about-scroll-progress/AboutCeoScrollProgress";
 import { BeginningStorySection } from "@/src/app/about/components/beginning-story/BeginningStorySection";
 import { ExpertiseSection } from "@/src/app/about/components/expertise/ExpertiseSection";
-import { LifestyleVisionSection } from "@/src/app/about/components/lifestyle-vision/LifestyleVisionSection";
 import { QuoteSection } from "@/src/app/about/components/quote/QuoteSection";
 import { TimelineSection } from "@/src/app/about/components/timeline/TimelineSection";
 import { TurningPointSection } from "@/src/app/about/components/turning-point/TurningPointSection";
@@ -38,7 +37,7 @@ export default function AboutCeoPage() {
         <TimelineSection />
         <ExpertiseSection />
         <QuoteSection />
-        <LifestyleVisionSection />
+        {/* <LifestyleVisionSection /> */}
       </main>
     </div>
   );

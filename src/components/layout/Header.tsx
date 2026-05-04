@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import {
   useCallback,
@@ -37,6 +38,15 @@ const NAV_ITEMS = [
   { href: "/contact", label: "문의하기" },
 ] as const;
 
+function pathMatchesNavHref(pathname: string, href: string) {
+  if (pathname === href) return true;
+  if (href === "/") return false;
+  return pathname.startsWith(`${href}/`);
+}
+
+const navLinkFocusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary/40";
+
 export default function MenuIcon({ open }: { open: boolean }) {
   return (
     <div className="relative w-7 h-7">
@@ -61,6 +71,7 @@ export default function MenuIcon({ open }: { open: boolean }) {
 }
 
 export function Header() {
+  const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   /** sticky 대신 fixed일 때 메인 영역에 동일 높이를 맞춰 레이아웃이 밀리지 않게 한다 */
   const [headerBandHeight, setHeaderBandHeight] = useState(0);
@@ -162,15 +173,23 @@ export function Header() {
               className="hidden items-center gap-1 lg:flex lg:gap-2"
               aria-label="주요 메뉴"
             >
-              {NAV_ITEMS.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="min-h-[44px] min-w-[44px] content-center rounded-md px-3 py-2 text-sm font-medium text-deep-blue/90 transition-colors hover:bg-secondary hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary/40"
-                >
-                  {item.label}
-                </Link>
-              ))}
+              {NAV_ITEMS.map((item) => {
+                const active = pathMatchesNavHref(pathname, item.href);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    aria-current={active ? "page" : undefined}
+                    className={`min-h-[44px] min-w-[44px] content-center rounded-md px-3 py-2 text-sm transition-colors ${navLinkFocusRing} ${
+                      active
+                        ? "bg-primary/15 font-semibold text-primary shadow-[inset_0_0_0_1px_rgba(91,116,184,0.35)]"
+                        : "font-medium text-deep-blue/90 hover:bg-secondary hover:text-primary"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
             </nav>
 
             <button
@@ -231,18 +250,26 @@ export function Header() {
             aria-label="주요 메뉴"
           >
             <ul className="flex flex-col gap-0.5 px-2">
-              {NAV_ITEMS.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    tabIndex={mobileOpen ? 0 : -1}
-                    className="block rounded-md px-3 py-3 text-base font-medium text-deep-blue/90 transition-colors hover:bg-secondary hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary/40"
-                    onClick={closeMobile}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
+              {NAV_ITEMS.map((item) => {
+                const active = pathMatchesNavHref(pathname, item.href);
+                return (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      tabIndex={mobileOpen ? 0 : -1}
+                      aria-current={active ? "page" : undefined}
+                      className={`block rounded-md py-3 pl-3 pr-3 text-base transition-colors ${navLinkFocusRing} ${
+                        active
+                          ? "border-l-[3px] border-primary bg-primary/12 font-semibold text-primary"
+                          : "border-l-[3px] border-transparent font-medium text-deep-blue/90 hover:bg-secondary hover:text-primary"
+                      }`}
+                      onClick={closeMobile}
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </nav>
         </div>

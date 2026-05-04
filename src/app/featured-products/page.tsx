@@ -19,7 +19,7 @@ export default function FeaturedProductsPage() {
         title="대표상품"
         description="면역을 중심으로 일상의 활력과 균형을 돕는 4Life 대표 제품을 소개합니다."
       />
-      <div className="px-4 py-16 sm:py-20">
+      <div className="py-0">
         <FeaturedProductsContent />
       </div>
     </div>

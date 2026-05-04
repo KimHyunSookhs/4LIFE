@@ -1,24 +1,29 @@
+import { RepresentativeProductPanel } from "./RepresentativeProductPanel";
+import { representativeProducts } from "./representative-products";
+
 /**
- * [대표상품] 목록/강조 영역
- * - 실제 쇼핑몰에선 `ListView`/`GridView`에 해당하는 그리드로 상품 카드를 배치한다.
+ * [대표상품] 히어로 이후 대표 제품 섹션.
+ * - 태그는 SEO/구조화 데이터 확장용으로 데이터에만 보관하고 화면에는 노출하지 않는다.
  */
 
 export function FeaturedProductsContent() {
   return (
     <section
-      className="mx-auto w-full max-w-5xl"
+      className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden bg-[#d8dbe0]"
       aria-labelledby="featured-products-heading"
     >
-      <h2
-        id="featured-products-heading"
-        className="text-2xl font-semibold tracking-tight text-deep-blue sm:text-3xl"
-      >
-        대표상품
+      <h2 id="featured-products-heading" className="sr-only">
+        대표 제품
       </h2>
-      <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-        면역력 증진에 도움을 줄 수 있는 대표 제품을 이 섹션에 정리해 두면
-        됩니다. 상품 카드, 가격, 구매/문의 CTA는 추후 연동하면 됩니다.
-      </p>
+      <div className="grid lg:grid-cols-3">
+        {representativeProducts.map((product, index) => (
+          <RepresentativeProductPanel
+            key={product.id}
+            product={product}
+            priority={index === 0}
+          />
+        ))}
+      </div>
     </section>
   );
 }
