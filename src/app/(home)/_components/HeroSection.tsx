@@ -9,6 +9,8 @@ import { useLayoutEffect, useRef } from "react";
 
 const HERO_MESSAGE_LINES = ["면역,", "그 이상의 변화"] as const;
 const HERO_MESSAGE = HERO_MESSAGE_LINES.join(" ");
+const HERO_LINE_HIDDEN_CLIP = "inset(100% -0.14em 0 -0.14em)";
+const HERO_LINE_REVEALED_CLIP = "inset(-0.08em -0.14em -0.12em -0.14em)";
 
 export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -33,26 +35,23 @@ export function HeroSection() {
 
     const ctx = gsap.context(() => {
       const kicker = section.querySelector<HTMLElement>(".home-hero-kicker");
-      const titleLines = gsap.utils.toArray<HTMLElement>(".home-hero-line-inner", title);
+      const lineMasks = gsap.utils.toArray<HTMLElement>(".hero-line-mask", title);
       const orbs = gsap.utils.toArray<HTMLElement>(".home-hero-orb", section);
 
       if (reduceMotion) {
-        gsap.set([kicker, titleLines, cta], {
+        gsap.set([kicker, cta], {
           opacity: 1,
           y: 0,
           yPercent: 0,
           clearProps: "transform",
         });
+        gsap.set(lineMasks, { clipPath: HERO_LINE_REVEALED_CLIP });
         gsap.set(lightOverlay, { opacity: 0.22 });
         return;
       }
 
       gsap.set(kicker, { y: 16, opacity: 0 });
-      gsap.set(titleLines, {
-        yPercent: 112,
-        opacity: 1,
-        transformOrigin: "50% 100%",
-      });
+      gsap.set(lineMasks, { clipPath: HERO_LINE_HIDDEN_CLIP });
       gsap.set(cta, { y: 18, opacity: 0 });
       gsap.set(lightOverlay, { opacity: 0.12 });
 
@@ -60,11 +59,12 @@ export function HeroSection() {
         .timeline({ defaults: { ease: "expo.out" } })
         .to(kicker, { y: 0, opacity: 1, duration: 0.82 })
         .to(
-          titleLines,
+          lineMasks,
           {
-            yPercent: 0,
-            duration: 1.18,
-            stagger: 0.16,
+            clipPath: HERO_LINE_REVEALED_CLIP,
+            duration: 1.2,
+            stagger: 0.14,
+            ease: "power3.out",
           },
           "-=0.42",
         )
@@ -152,17 +152,13 @@ export function HeroSection() {
           <h1
             ref={titleRef}
             id="home-hero-heading"
-            className="relative z-10 flex w-full max-w-full flex-col items-center justify-center text-[clamp(3.85rem,9vw,10rem)] leading-[0.88] font-black tracking-[-0.1em] text-balance text-white drop-shadow-[0_22px_70px_rgba(0,0,0,0.46)] sm:tracking-[-0.105em]"
+            className="relative z-10 flex w-full max-w-full flex-col items-center justify-center text-[clamp(3.65rem,8.6vw,9.5rem)] leading-[0.88] font-black tracking-[0.1em] text-balance text-white drop-shadow-[0_22px_70px_rgba(0,0,0,0.46)] sm:tracking-[-0.105em]"
             aria-label={HERO_MESSAGE}
           >
             {HERO_MESSAGE_LINES.map((line) => (
-              <span
-                key={line}
-                className="home-hero-line block overflow-hidden pb-[0.08em] whitespace-nowrap"
-                aria-hidden
-              >
-                <span className="home-hero-line-inner block will-change-transform">
-                  {line}
+              <span key={line} className="hero-line pb-[0.08em]" aria-hidden>
+                <span className="hero-line-mask">
+                  <span className="hero-line-text whitespace-nowrap">{line}</span>
                 </span>
               </span>
             ))}

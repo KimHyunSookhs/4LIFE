@@ -12,9 +12,12 @@ export function SiteCtaRevealContent({ titleId = "site-cta-title" }: SiteCtaReve
   return (
     <>
       <SectionEyebrow>함께 시작하기</SectionEyebrow>
-      <blockquote className="mx-auto max-w-5xl text-pretty text-4xl mt-2 leading-tight font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-          “건강은 선택이 아니라 방향입니다.”
-        </blockquote>
+      <blockquote
+        id={titleId}
+        className="mx-auto max-w-5xl text-pretty text-4xl mt-2 leading-tight font-semibold tracking-tight sm:text-5xl lg:text-6xl"
+      >
+        “건강은 선택이 아니라 방향입니다.”
+      </blockquote>
         <p className="mt-6 text-base text-white/68 sm:text-lg">
           오늘의 작은 선택이 내일의 컨디션과 삶의 가능성을 바꿉니다.
         </p>

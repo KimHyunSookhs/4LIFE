@@ -53,6 +53,25 @@ body {
 }
 
 /**
+ * 홈 히어로 제목 — 줄 단위 reveal용 clip-path
+ * (`overflow:hidden` 마스크 대비 한글·부호 글립 잘림 방지)
+ */
+.hero-line {
+  display: block;
+}
+
+.hero-line-mask {
+  display: block;
+  margin: -0.08em -0.14em -0.12em;
+  padding: 0.08em 0.14em 0.12em;
+  clip-path: inset(100% -0.14em 0 -0.14em);
+}
+
+.hero-line-text {
+  display: block;
+}
+
+/**
  * 모바일 전용 스크롤바 숨김
  *
  * - 스크롤 기능 자체는 유지하고, 오른쪽에 보이는 얇은 스크롤바 UI만 숨긴다.
