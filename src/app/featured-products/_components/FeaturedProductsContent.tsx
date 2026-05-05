@@ -9,13 +9,13 @@ import { representativeProducts } from "./representative-products";
 export function FeaturedProductsContent() {
   return (
     <section
-      className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden bg-[#d8dbe0]"
+      className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden bg-[#d8dbe0] min-h-svh"
       aria-labelledby="featured-products-heading"
     >
       <h2 id="featured-products-heading" className="sr-only">
         대표 제품
       </h2>
-      <div className="grid lg:grid-cols-3">
+      <div className="grid min-h-svh grid-cols-1 grid-rows-3 lg:grid-cols-3 lg:grid-rows-1">
         {representativeProducts.map((product, index) => (
           <RepresentativeProductPanel
             key={product.id}

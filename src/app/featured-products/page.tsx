@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { SectionHero } from "@/src/components/common/SectionHero";
 import { FeaturedProductsContent } from "./_components/FeaturedProductsContent";
+import { ProductsTab } from "./_components/ProductsTab";
 
 /**
  * /featured-products — 대표상품
@@ -21,6 +22,7 @@ export default function FeaturedProductsPage() {
       />
       <div className="py-0">
         <FeaturedProductsContent />
+        <ProductsTab />
       </div>
     </div>
   );

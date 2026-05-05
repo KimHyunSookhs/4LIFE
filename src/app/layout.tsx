@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Header } from "@/src/components/layout/Header";
 import "./globals.css";
-import { SiteCtaSection } from "@/src/components/common/SiteCtaSection";
 import { Footer } from "@/src/components/layout/Footer";
 import { GoToTopButton } from "../components/layout/floating/GoToTopButton";
+import { SiteCtaSection } from "../components/common/SiteCtaSection";
 
 /**
  * 로컬에 둔 Noto Sans KR을 기본(산세리프) 폰트로 사용

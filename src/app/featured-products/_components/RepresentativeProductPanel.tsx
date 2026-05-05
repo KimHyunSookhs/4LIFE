@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import type { RepresentativeProduct } from "./representative-products";
 
 type RepresentativeProductPanelProps = {
@@ -12,11 +11,7 @@ export function RepresentativeProductPanel({
   priority = false,
 }: RepresentativeProductPanelProps) {
   return (
-    <Link
-      href={product.actionLink}
-      className="group relative isolate flex min-h-[72svh] overflow-hidden bg-[#d8dbe0] text-white focus-visible:outline-2 focus-visible:outline-offset-[-6px] focus-visible:outline-white/80 lg:min-h-[78svh]"
-      aria-label={`${product.title} 자세히 보기`}
-    >
+    <div className="group relative isolate flex h-full min-h-0 w-full overflow-hidden bg-[#d8dbe0] text-white">
       <Image
         src={product.imageUrl}
         alt={`${product.title} 이미지`}
@@ -40,13 +35,13 @@ export function RepresentativeProductPanel({
         <p className="text-sm font-semibold tracking-tight text-white/88 sm:text-base">
           {product.category}
         </p>
-        <h3 className="mt-3 text-[clamp(2.5rem,10vw,4.25rem)] leading-[0.9] font-black tracking-[-0.08em] text-white sm:text-[clamp(3.25rem,8vw,5.25rem)] lg:text-[clamp(3rem,4.9vw,5.5rem)]">
+        <h3 className="mt-1 text-[clamp(2.5rem,10vw,4rem)] leading-[1] font-bold text-white sm:text-[clamp(3.25rem,8vw,5rem)] lg:text-[clamp(3rem,4.9vw,5.25rem)]">
           {product.title}
         </h3>
-        <p className="mt-5 max-w-md text-sm leading-7 text-white/78 opacity-0 translate-y-3 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 sm:text-base">
+        <p className="mt-3 max-w-md text-sm leading-7 text-white/78 opacity-0 translate-y-3 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 sm:text-base">
           {product.description}
         </p>
       </div>
-    </Link>
+    </div>
   );
 }
